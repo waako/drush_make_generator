@@ -90,13 +90,15 @@ function formVersion($v){
   $v = ($v) ? $v : $version;  
   $output = '';
   
-  if ($v == 6){$checked6 = 'checked="checked"'; $checked7 = ''; }
-  if ($v == 7){$checked6 = ''; $checked7 = 'checked="checked"'; }
+  if ($v == 6){$checked6 = 'checked="checked"'; $checked7 = '';$checked8 = ''; }
+  if ($v == 7){$checked6 = ''; $checked7 = 'checked="checked"';$checked8 = ''; }
+  if ($v == 8){$checked6 = ''; $checked7 = '';$checked8 = 'checked="checked"'; }
   
   $output .= '<fieldset id="fs-version">
     <legend><p>Drupal Version <span class="small">Since different modules and themes are available for each major version<br /> of Drupal, the form will be <strong>reset</strong> if you change this setting.</span></p></legend>
     <label for="o-version6"><input id="o-version6" type="radio" name="makefile[version]" value="6" '.$checked6.' /> <span class="title">Drupal 6</span></label>
     <label for="o-version7"><input id="o-version7" type="radio" name="makefile[version]" value="7" '.$checked7.'/> <span class="title">Drupal 7</span></label>
+    <label for="o-version8"><input id="o-version8" type="radio" name="makefile[version]" value="8" '.$checked7.'/> <span class="title">Drupal 8</span></label>
   </fieldset>';
   
   return $output;
@@ -520,10 +522,31 @@ function makeCore($core='drupal',$opts) {
       $output .= 'projects[pressflow][download][type] = "git"'."\r\n";
       $output .= 'projects[pressflow][download][url] = "git://github.com/pressflow/7.git"'."\r\n";
       break;
+
+    case 'spark7':
+      $output .= '; Spark for Drupal 7'"\r\n";
+      $output .= 'projects[spark][download][type] = "git"'."\r\n";
+      $output .= 'projects[spark][download][url] = "http://git.drupal.org/project/spark.git"'."\r\n";
+      $output .= 'projects[spark][download][branch] = "7.x-1.x"'."\r\n";
+      break;
     
     case 'drupal7':
       $output .= '; Drupal 7.x. Requires the `core` property to be set to 7.x.'."\r\n";
       $output .= 'projects[drupal][version] = 7'."\r\n";
+      break;
+
+      // 8.x
+
+    case 'spark8':
+      $output .= '; Spark for Drupal 8'"\r\n";
+      $output .= 'projects[spark][download][type] = "git"'."\r\n";
+      $output .= 'projects[spark][download][url] = "http://git.drupal.org/project/spark.git"'."\r\n";
+      $output .= 'projects[spark][download][branch] = "8.x-1.x"'."\r\n";
+      break;
+
+    case 'drupal8':
+      $output .= '; Drupal 8.x.'."\r\n";
+      $output .= 'projects[drupal][version] = 8'."\r\n";
       break;
 
     default:
